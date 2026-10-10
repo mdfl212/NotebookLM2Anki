@@ -98,8 +98,10 @@ You need three things: AnkiConnect, the NotebookLM note type, and the extension 
 |---|---|
 | "Could not find quiz data" | Refresh the NotebookLM tab and try again. |
 | Math shows as `$\pi$` instead of `π` | Restart Anki and confirm the note type add-on is installed. |
+| Math appears with literal dollar signs in AnkiDroid | Export a fresh package; dollar-delimited inline and display math is converted to Anki-compatible `\(...\)` and `\[...\]` delimiters. |
 | Deck name is incorrect after a notebook rename | This is a known issue; see [`CHANGELOG.md`](./CHANGELOG.md) for the latest status. |
-| AnkiDroid reports "Dictionary mismatch", "stream did not contain valid UTF-8", or a protobuf "buffer underflow" while importing an `.apkg` | Reload the updated extension, export a fresh package, and import that new file; the affected `_fixed` build had malformed protobuf metadata, an invalid `collection.anki21b` compression frame, and malformed ZIP header rewriting. |
+| AnkiDroid reports "Dictionary mismatch", "stream did not contain valid UTF-8", a protobuf/Zstandard error, or "no such notetype" while importing an `.apkg` | Reload the updated extension, export a fresh package, and import that new file; the exporter now uses Anki's legacy schema-v11 package format to avoid newer package metadata and note-type schema incompatibilities. |
+| Quiz cards look different or answer choices are not tappable on AnkiDroid | Reload the updated extension, export a fresh package, and import that new file; the `.apkg` includes its own templates modeled after the desktop note type add-on. |
 | Extension button does nothing | Make sure you're on a NotebookLM notebook page, not the homepage. |
 
 ## Project status

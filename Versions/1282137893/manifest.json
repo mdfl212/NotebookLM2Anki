@@ -1,0 +1,7 @@
+{
+    "package": "notebooklm_loader",
+    "name": "NotebookLM Note Type Loader",
+    "mod": 1700000000,
+    "min_point_version": 45,
+    "max_point_version": 99
+}

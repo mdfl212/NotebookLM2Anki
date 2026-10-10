@@ -6,7 +6,9 @@ All notable changes to this project are documented below.
 
 ### Fixed
 - Fixed the stale deck-name issue after renaming a NotebookLM notebook.
-- Fixed AnkiDroid `.apkg` import errors by writing package metadata as raw protobuf, correcting the `collection.anki21b` Zstandard frame header, splitting payloads into valid-size blocks, and removing ZIP header rewriting that corrupted the archive and its UTF-8 filename flags.
+- Fixed AnkiDroid `.apkg` import errors by switching to the legacy schema-v11 package format, which keeps note types in the collection JSON and avoids mismatches with modern normalized note-type tables.
+- Matched the `.apkg` quiz front/back layout more closely to the desktop note type add-on, with a collapsible hint, tappable answer choices, immediate feedback, and the correct-answer rationale.
+- Normalized `$...$` and `$$...$$` math delimiters to Anki-compatible `\(...\)` and `\[...\]` in exported quiz and flashcard fields.
 - Root cause: the export logic was reading the notebook title from the wrong execution context (offscreen iframe instead of the active NotebookLM page), allowing the old embedded JSON title to override the live page title.
 - Updated title resolution priority to:
   1. DOM selectors
