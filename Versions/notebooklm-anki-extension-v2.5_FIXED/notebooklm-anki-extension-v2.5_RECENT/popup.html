@@ -1,0 +1,34 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="UTF-8" />
+  <style>
+    body { margin: 0; width: 360px; background: #1f1f1f; color: #e3e3e3; font: 12px/1.45 'Roboto','Segoe UI',sans-serif; }
+    .head { padding: 12px 14px 8px; display: flex; justify-content: space-between; align-items: baseline; }
+    .title { font-weight: 600; font-size: 14px; }
+    .timer { color: #9aa0a6; font-variant-numeric: tabular-nums; }
+    .bar { height: 6px; background: #333; margin: 0 14px 8px; border-radius: 3px; overflow: hidden; }
+    .fill { height: 100%; width: 0%; background: #a8c7fa; transition: width .25s ease; }
+    .fill.ok { background: #6dd58c; } .fill.error { background: #ffb4ab; }
+    #status { padding: 0 14px 8px; word-break: break-word; }
+    #status.warn { color: #e6b455; } #status.ok { color: #6dd58c; } #status.error { color: #ffb4ab; }
+    #log { max-height: 240px; overflow-y: auto; padding: 6px 14px; background: #181818; border-top: 1px solid #333; border-bottom: 1px solid #333;
+      font: 11px/1.5 Consolas, Monaco, monospace; min-height: 30px; }
+    .line { white-space: pre-wrap; word-break: break-word; }
+    .line .t { color: #7d838a; margin-right: 6px; }
+    .line.ok { color: #6dd58c; } .line.warn { color: #e6b455; } .line.error { color: #ffb4ab; } .line.info { color: #c4c7c5; }
+    .foot { padding: 8px 14px; display: flex; gap: 8px; }
+    button { background: #2d2d2d; color: #a8c7fa; border: 1px solid #444746; border-radius: 14px; padding: 4px 12px; cursor: pointer; font-size: 11px; }
+    button:hover { background: #383838; }
+    .empty { color: #9aa0a6; }
+  </style>
+</head>
+<body>
+  <div class="head"><span class="title">NotebookLM → Anki</span><span class="timer" id="timer"></span></div>
+  <div class="bar"><div class="fill" id="fill"></div></div>
+  <div id="status" class="empty">Loading…</div>
+  <div id="log"></div>
+  <div class="foot"><button id="copy">Copy log</button><button id="clear">Clear</button></div>
+  <script src="popup.js"></script>
+</body>
+</html>

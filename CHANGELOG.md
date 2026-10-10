@@ -6,6 +6,7 @@ All notable changes to this project are documented below.
 
 ### Fixed
 - Fixed the stale deck-name issue after renaming a NotebookLM notebook.
+- Fixed AnkiDroid `.apkg` import errors by correcting the `collection.anki21b` Zstandard frame header, splitting payloads into valid-size blocks, and removing ZIP header rewriting that corrupted the archive and its UTF-8 filename flags.
 - Root cause: the export logic was reading the notebook title from the wrong execution context (offscreen iframe instead of the active NotebookLM page), allowing the old embedded JSON title to override the live page title.
 - Updated title resolution priority to:
   1. DOM selectors

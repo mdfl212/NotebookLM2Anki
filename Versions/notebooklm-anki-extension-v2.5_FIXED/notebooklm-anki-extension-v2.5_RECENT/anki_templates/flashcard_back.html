@@ -1,0 +1,42 @@
+<link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
+
+<div class="fc-wrapper">
+  <div class="fc-label front-repeat">Front</div>
+  <div class="fc-front-text fc-dim" id="fc-back-front"></div>
+  <hr class="fc-divider">
+  <div class="fc-label">Back</div>
+  <div class="fc-back-text" id="fc-back-answer"></div>
+</div>
+
+<div id="fc-raw" style="display:none;">
+  <div id="fc-f">{{Front}}</div>
+  <div id="fc-b">{{Back}}</div>
+</div>
+
+<script>
+(function () {
+  function cleanMath(s) {
+    if (!s) return "";
+    s = s.replace(/\$\$(.*?)\$\$/gs, '\\[$1\\]');
+    s = s.replace(/\$((?:[^$]|\\$)+?)\$/g, '\\($1\\)');
+    s = s.replace(/`([^`]+)`/g, '<code class="latex-snippet">$1</code>');
+    return s;
+  }
+  function renderKatex(el) {
+    if (typeof renderMathInElement === "function") {
+      renderMathInElement(el, {
+        delimiters: [
+          { left: "\\[", right: "\\]", display: true },
+          { left: "\\(", right: "\\)", display: false }
+        ]
+      });
+    }
+  }
+  var front = document.getElementById("fc-f");
+  var back = document.getElementById("fc-b");
+  var frontEl = document.getElementById("fc-back-front");
+  var backEl = document.getElementById("fc-back-answer");
+  if (front && frontEl) { frontEl.innerHTML = cleanMath(front.innerHTML || ""); renderKatex(frontEl); }
+  if (back && backEl)   { backEl.innerHTML  = cleanMath(back.innerHTML  || ""); renderKatex(backEl); }
+})();
+</script>

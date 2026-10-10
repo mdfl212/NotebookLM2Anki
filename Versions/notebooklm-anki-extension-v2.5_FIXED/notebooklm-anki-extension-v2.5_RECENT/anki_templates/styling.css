@@ -1,0 +1,8 @@
+.card{font-family:sans-serif;font-size:15px;background:#1e1e1e;color:#e3e3e3;padding:16px;line-height:1.6}
+.question{font-size:17px;font-weight:500;color:#fff;margin-bottom:12px}
+.hint{background:#252525;border-left:4px solid #a8c7fa;padding:10px 14px;color:#a8c7fa;border-radius:0 8px 8px 0;margin-bottom:12px;font-size:14px}
+hr{border-color:#444;margin:14px 0}
+.options{display:flex;flex-direction:column;gap:10px}
+.option{background:#2d2d2d;border:1px solid #444;border-radius:10px;padding:12px 16px}
+.correct{border:2px solid #6dd58c!important;background:#1a2e1e!important;color:#6dd58c!important}
+.rationale{margin-top:8px;color:#ccc;font-size:14px;font-weight:normal}
