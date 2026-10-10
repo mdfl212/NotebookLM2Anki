@@ -1,7 +1,8 @@
 # NotebookLM → Anki
 
 DOWNLOAD:
-See Releases or https://github.com/mdfl212/NotebookLM2Anki/releases/download/Current/notebooklm-anki-extension-v2.5_RECENT.zip
+See Releases or 
+https://github.com/mdfl212/NotebookLM2Anki/releases/download/notebooklm-anki-extension-v2.5/notebooklm-anki-extension-v2.5.zip
 
 Convert NotebookLM quizzes and flashcard sets into Anki cards in one click.
 
