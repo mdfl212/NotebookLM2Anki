@@ -1,11 +1,14 @@
 # NotebookLM → Anki
 
+DOWNLOAD:
+See Releases or https://github.com/mdfl212/NotebookLM2Anki/releases/download/Current/notebooklm-anki-extension-v2.5_RECENT.zip
+
 Convert NotebookLM quizzes and flashcard sets into Anki cards in one click.
 
 This Chrome extension lets you export NotebookLM content into Anki via AnkiConnect or as a downloadable `.apkg` file, making it easy to turn study material into reusable review decks.
 
 > Forked from [searchswapnil-prog/notebooklm-anki-extension](https://github.com/searchswapnil-prog/notebooklm-anki-extension)  
-> Maintained by [[YOUR_HANDLE]]
+> fork Maintained by mdfl212
 
 <p align="center">
   <img src="./How it looks like in notebooklm .png" alt="Exporting NotebookLM content into Anki" width="900" />
