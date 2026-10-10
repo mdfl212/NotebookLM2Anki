@@ -195,8 +195,8 @@ hr{border-color:#444;margin:14px 0}
     return out;
   }
 
-  // Pre-computed zstd for the two constant payloads (verified with libzstd).
-  const META_ZSTD  = new Uint8Array([0x28, 0xb5, 0x2f, 0xfd, 0x20, 0x02, 0x11, 0x00, 0x00, 0x08, 0x03]); // 0x08 0x03
+  // The package metadata is protobuf (version=Latest), while the media list is zstd.
+  const META = new Uint8Array([0x08, 0x03]);
   const MEDIA_ZSTD = new Uint8Array([0x28, 0xb5, 0x2f, 0xfd, 0x20, 0x02, 0x11, 0x00, 0x00, 0x7b, 0x7d]); // {}
 
   /**
@@ -315,7 +315,7 @@ hr{border-color:#444;margin:14px 0}
       const epoch = new Date(0);
       const storeOpts = { compression: "STORE", date: epoch };
 
-      zip.file("meta",              META_ZSTD,  storeOpts);
+      zip.file("meta",              META,       storeOpts);
       zip.file("collection.anki21b", anki21b,    storeOpts);
       zip.file("collection.anki2",   sqliteBytes, storeOpts); // uncompressed fallback
       zip.file("media",             MEDIA_ZSTD, storeOpts);

@@ -99,7 +99,7 @@ You need three things: AnkiConnect, the NotebookLM note type, and the extension 
 | "Could not find quiz data" | Refresh the NotebookLM tab and try again. |
 | Math shows as `$\pi$` instead of `π` | Restart Anki and confirm the note type add-on is installed. |
 | Deck name is incorrect after a notebook rename | This is a known issue; see [`CHANGELOG.md`](./CHANGELOG.md) for the latest status. |
-| AnkiDroid reports "Dictionary mismatch" or "stream did not contain valid UTF-8" while importing an `.apkg` | Reload the updated extension, export a fresh package, and import that new file; the affected `_fixed` build had an invalid `collection.anki21b` compression frame and malformed ZIP header rewriting. |
+| AnkiDroid reports "Dictionary mismatch", "stream did not contain valid UTF-8", or a protobuf "buffer underflow" while importing an `.apkg` | Reload the updated extension, export a fresh package, and import that new file; the affected `_fixed` build had malformed protobuf metadata, an invalid `collection.anki21b` compression frame, and malformed ZIP header rewriting. |
 | Extension button does nothing | Make sure you're on a NotebookLM notebook page, not the homepage. |
 
 ## Project status
