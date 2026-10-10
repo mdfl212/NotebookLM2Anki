@@ -1,0 +1,63 @@
+// offscreen.js - builds the .apkg (needs WASM + Blob APIs that a service worker can't host)
+// Reports progress to the background worker, which relays it to the progress panel.
+
+let sqlPromise = null;
+function getSQL() {
+  if (!sqlPromise) {
+    sqlPromise = initSqlJs({ locateFile: f => chrome.runtime.getURL("lib/" + f) });
+  }
+  return sqlPromise;
+}
+
+let lastSent = 0;
+function report(pct, step, level, hint, force) {
+  const now = Date.now();
+  if (!force && now - lastSent < 80) return; // don't flood the log with per-card updates
+  lastSent = now;
+  chrome.runtime.sendMessage({ target: "background", type: "apkgProgress", pct, step, level: level || "info", hint })
+    .catch(() => {});
+}
+
+function safeName(title) {
+  const t = String(title || "Notebook").replace(/[\\/:*?"<>|\u0000-\u001f]+/g, "-").replace(/\s+/g, " ").trim().slice(0, 80);
+  return "NotebookLM - " + (t || "Notebook") + ".apkg";
+}
+
+async function readTemplate(path) {
+  const r = await fetch(chrome.runtime.getURL(path));
+  if (!r.ok) throw new Error("Could not load " + path);
+  return r.text();
+}
+
+async function buildApkg(msg) {
+  report(36, "Loading card templates…", "info", "", true);
+  const [front, back, css] = await Promise.all([
+    readTemplate("anki_templates/front.html"),
+    readTemplate("anki_templates/back.html"),
+    readTemplate("anki_templates/styling.css")
+  ]);
+
+  const firstLoad = !sqlPromise;
+  report(42, firstLoad ? "Loading SQLite engine… (first export is slower)" : "SQLite engine already loaded", "info",
+    "Loading the ~650 KB SQLite engine; this can take a few seconds the first time.", true);
+  const SQL = await getSQL();
+  report(52, "SQLite engine ready", "ok", "", true);
+
+  const bytes = await ApkgBuilder.build({
+    SQL, JSZip, deckTitle: msg.deckTitle, cards: msg.cards, templates: { front, back, css },
+    onProgress: (frac, label) => report(55 + 30 * frac, label, "info", "", !/^Adding card/.test(label) || frac >= 1)
+  });
+
+  report(90, `Package built (${Math.max(1, Math.round(bytes.length / 1024))} KB)`, "ok", "", true);
+  const url = URL.createObjectURL(new Blob([bytes], { type: "application/octet-stream" }));
+  setTimeout(() => URL.revokeObjectURL(url), 5 * 60 * 1000);
+  return { ok: true, url, filename: safeName(msg.deckTitle), count: msg.cards.length };
+}
+
+chrome.runtime.onMessage.addListener((msg, sender, sendResponse) => {
+  if (!msg || msg.target !== "offscreen" || msg.type !== "buildApkg") return;
+  buildApkg(msg)
+    .then(sendResponse)
+    .catch(e => sendResponse({ ok: false, error: String((e && e.message) || e) }));
+  return true;
+});

@@ -1,0 +1,34 @@
+{
+  "manifest_version": 3,
+  "name": "NotebooktoAnki",
+  "version": "1.0",
+  "permissions": [
+    "activeTab",
+    "scripting",
+    "storage"
+  ],
+  "host_permissions": [
+    "https://notebooklm.google.com/*",
+    "https://*.notebooklm.google.com/*",
+    "https://notebook.google.com/*",
+    "https://*.google.com/*"
+  ],
+  "action": {
+    "default_popup": "popup.html"
+  },
+  "background": {
+    "service_worker": "background.js"
+  },
+  "content_scripts": [
+    {
+      "matches": [
+        "https://notebooklm.google.com/*",
+        "https://*.notebooklm.google.com/*",
+        "https://notebook.google.com/*"
+      ],
+      "js": ["content.js"],
+      "run_at": "document_idle",
+      "all_frames": true
+    }
+  ]
+}

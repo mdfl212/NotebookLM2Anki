@@ -1,0 +1,38 @@
+<link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
+
+<div class="fc-wrapper">
+  <div class="fc-label">Front</div>
+  <div class="fc-front-text" id="fc-front"></div>
+</div>
+
+<div id="fc-raw" style="display:none;">
+  <div id="fc-f">{{Front}}</div>
+</div>
+
+<script>
+(function () {
+  function cleanMath(s) {
+    if (!s) return "";
+    s = s.replace(/\$\$(.*?)\$\$/gs, '\\[$1\\]');
+    s = s.replace(/\$((?:[^$]|\\$)+?)\$/g, '\\($1\\)');
+    s = s.replace(/`([^`]+)`/g, '<code class="latex-snippet">$1</code>');
+    return s;
+  }
+  function renderKatex(el) {
+    if (typeof renderMathInElement === "function") {
+      renderMathInElement(el, {
+        delimiters: [
+          { left: "\\[", right: "\\]", display: true },
+          { left: "\\(", right: "\\)", display: false }
+        ]
+      });
+    }
+  }
+  var front = document.getElementById("fc-f");
+  var target = document.getElementById("fc-front");
+  if (front && target) {
+    target.innerHTML = cleanMath(front.innerHTML || "");
+    renderKatex(target);
+  }
+})();
+</script>
